@@ -8,7 +8,7 @@ def load_data(file):
     if file is not None:
         try:
             if file.name.endswith('.csv'):
-                df = pd.read_csv(file, error_bad_lines=False)  # Ignorer les lignes problématiques
+                df = pd.read_csv(file, on_bad_lines='skip')  # Ignorer les lignes problématiques
             elif file.name.endswith('.xlsx'):
                 df = pd.read_excel(file)
             elif file.name.endswith('.json'):
