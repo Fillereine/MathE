@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 # Fonction de chargement du fichier
@@ -9,7 +8,7 @@ def load_data(file):
     if file is not None:
         try:
             if file.name.endswith('.csv'):
-                df = pd.read_csv(file)
+                df = pd.read_csv(file, error_bad_lines=False)  # Ignorer les lignes problématiques
             elif file.name.endswith('.xlsx'):
                 df = pd.read_excel(file)
             elif file.name.endswith('.json'):
@@ -18,6 +17,9 @@ def load_data(file):
                 st.error("Format non supporté. Utilisez CSV, Excel ou JSON.")
                 return None
             return df
+        except pd.errors.ParserError:
+            st.error("Erreur de parsing dans le fichier. Veuillez vérifier le format du CSV.")
+            return None
         except Exception as e:
             st.error(f"Erreur lors du chargement du fichier : {e}")
             return None
@@ -89,6 +91,3 @@ if uploaded_file is not None:
                                data=csv,
                                file_name="MathE_dataset_cleaned.csv",
                                mime="text/csv")
-
-            # Option pour afficher les informations sur le fichier nettoyé
-            st.write(f"Le fichier nettoyé contient {cleaned_df.shape[0]} lignes et {cleaned_df.shape[1]} colonnes.")
