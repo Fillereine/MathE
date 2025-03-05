@@ -8,11 +8,9 @@ def load_data(file):
     if file is not None:
         try:
             if file.name.endswith('.csv'):
-                # Essayer de lire le fichier avec utf-8 d'abord
                 try:
                     df = pd.read_csv(file, encoding='utf-8', on_bad_lines='skip')
                 except UnicodeDecodeError:
-                    # Si ça échoue, essayer avec ISO-8859-1
                     df = pd.read_csv(file, encoding='ISO-8859-1', on_bad_lines='skip')
             elif file.name.endswith('.xlsx'):
                 df = pd.read_excel(file)
@@ -51,9 +49,13 @@ def clean_data(df, missing_threshold=0.6):
         label_encoders[col] = le
 
     # Normalisation des valeurs numériques
-    scaler = StandardScaler()
     numeric_cols = df_cleaned.select_dtypes(include=['float64', 'int64']).columns
-    df_cleaned[numeric_cols] = scaler.fit_transform(df_cleaned[numeric_cols])
+    
+    if not numeric_cols.empty:
+        scaler = StandardScaler()
+        df_cleaned[numeric_cols] = scaler.fit_transform(df_cleaned[numeric_cols])
+    else:
+        st.warning("Aucune colonne numérique à normaliser.")
 
     return df_cleaned
 
