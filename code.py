@@ -64,7 +64,7 @@ st.title("PRETRAITEMENT DE DONNEES")
 st.write("Téléchargez le fichier de votre choix.")
 
 # Upload du fichier
-uploaded_file = st.file_uploader("Importez un fichier (CSV, Excel, JSON)", type=["csv", "xlsx", "json"])
+uploaded_file = st.file_uploader("Importez un fichier (CSV)", type=["csv", "xlsx", "json"])
 
 if uploaded_file is not None:
     # Charger et afficher les données
