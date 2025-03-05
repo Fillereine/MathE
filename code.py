@@ -92,8 +92,8 @@ if uploaded_file is not None:
             st.write("✅ Données nettoyées et transformées")
             st.dataframe(cleaned_df.head())
 
-            # Télécharger le fichier nettoyé
-            csv = cleaned_df.to_csv(index=False).encode('utf-8')
+            # Télécharger le fichier nettoyé avec point-virgule comme séparateur
+            csv = cleaned_df.to_csv(index=False, sep=';').encode('utf-8')
             st.download_button(label="⬇ Télécharger les données prétraitées",
                                data=csv,
                                file_name="MathE_dataset_cleaned.csv",
