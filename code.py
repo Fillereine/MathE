@@ -68,7 +68,7 @@ uploaded_file = st.file_uploader("Importez un fichier (CSV)", type=["csv", "xlsx
 
 if uploaded_file is not None:
     # Charger et afficher les données
-    df = load_data(uploaded_file)
+    df = load_data(uploaded_fil, sep=';')
     
     if df is not None:
         st.subheader("🔍 Aperçu des données originales")
