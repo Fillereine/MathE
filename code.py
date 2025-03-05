@@ -8,7 +8,12 @@ def load_data(file):
     if file is not None:
         try:
             if file.name.endswith('.csv'):
-                df = pd.read_csv(file, on_bad_lines='skip')  # Ignorer les lignes problématiques
+                # Essayer de lire le fichier avec utf-8 d'abord
+                try:
+                    df = pd.read_csv(file, encoding='utf-8', on_bad_lines='skip')
+                except UnicodeDecodeError:
+                    # Si ça échoue, essayer avec ISO-8859-1
+                    df = pd.read_csv(file, encoding='ISO-8859-1', on_bad_lines='skip')
             elif file.name.endswith('.xlsx'):
                 df = pd.read_excel(file)
             elif file.name.endswith('.json'):
