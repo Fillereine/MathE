@@ -1,9 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import sklearn
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-
 
 # Fonction de chargement du fichier
 @st.cache_data
@@ -91,3 +89,6 @@ if uploaded_file is not None:
                                data=csv,
                                file_name="MathE_dataset_cleaned.csv",
                                mime="text/csv")
+
+            # Option pour afficher les informations sur le fichier nettoyé
+            st.write(f"Le fichier nettoyé contient {cleaned_df.shape[0]} lignes et {cleaned_df.shape[1]} colonnes.")
